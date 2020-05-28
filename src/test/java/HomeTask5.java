@@ -1,12 +1,23 @@
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.http.entity.StringEntity;
 import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
+
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
+
 public class HomeTask5 {
     String petId = "1";
+    String petToCreate = "Cat";
+    String petToUpdate = "Dog";
+    String baseUrl = "https://petstore.swagger.io/v2";
+    String petUrl = "https://petstore.swagger.io/v2/pet";
 
     @Test
     public void createPet(){
@@ -15,45 +26,52 @@ public class HomeTask5 {
 
         JSONObject requestParams = new JSONObject();
         requestParams.put("id", petId);
-        requestParams.put("name", "Cat");
-        requestParams.put("photoUrl", "Cat");
+        requestParams.put("name", petToCreate);
         request.body(requestParams.toJSONString());
 
-        Response response = request.post("https://petstore.swagger.io/v2/pet");
+        Response response = request.post(petUrl);
 
         int statusCode = response.getStatusCode();
         System.out.println("The status code recieved: " + statusCode);
-
         System.out.println("Response body: " + response.body().asString());
 
+        assertEquals(200, response.getStatusCode());
+        assertTrue(response.asString().contains(petToCreate));
 
     }
+
 
     @Test
     public void updatePet(){
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
+
         JSONObject requestParams = new JSONObject();
-        requestParams.put("id", "1");
-        requestParams.put("name", "Dog");
+        requestParams.put("id", petId);
+        requestParams.put("name", petToUpdate);
         request.body(requestParams.toJSONString());
-        Response response = request.put("https://petstore.swagger.io/v2/pet");
+
+        Response response = request.put(petUrl);
 
         int statusCode = response.getStatusCode();
         System.out.println("The status code recieved: " + statusCode);
-
         System.out.println("Response body: " + response.body().asString());
+
+        assertEquals(200, response.getStatusCode());
+        assertTrue(response.asString().contains(petToUpdate));
+
     }
 
     @Test
     public void deletePet(){
         RestAssured
-                .given()// переключает билдер на работу с реквестом
-                .log().all() //логируется, распечатывается весь реквест
-                .baseUri("https://petstore.swagger.io/v2") //базовая часть урла
-                .delete("/pet/"+petId) //параметр урла и метод http - get
-                .then() // переключает билдер на работу с респонсом
-                .log().all()//логируется, распечатывается весь респонс
-                .statusCode(200); //проверка статус кода
+                .given()
+                .log().all()
+                .baseUri(baseUrl)
+                .delete("/pet/"+petId)
+                .then()
+                .log().all()
+                .statusCode(200);
     }
+
 }
