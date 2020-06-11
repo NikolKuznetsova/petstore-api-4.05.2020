@@ -1,6 +1,9 @@
+package endpoints;
+
 import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import models.Pet;
 import org.json.simple.JSONObject;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -46,22 +49,17 @@ public class PetEndPoints {
     /**
      * Method creates new pet.
      *
-     * @param petId   pet's id. Id can be set random if it's value will be set to zero
-     * @param petName pet's name. Name can be set random if method Utilities.getRandom() will be called
      * @return
      */
-    public Long createPet(long petId, String petName) {
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("id", petId);
-        requestParams.put("name", petName);
+    public Long createPet(Pet pet) {
 
         ValidatableResponse response = given()
 
-                .body(requestParams.toJSONString())
+                .body(pet)
                 .post(CREATE_PET)
                 .then()
                 .log().all()
-                .body("name", is(petName), "id", is(petId))//ToDo: исправить проверку petId
+                .body("name", is(pet.getName()))
                 .statusCode(200);
         return response.extract().path("id", "name");
 
@@ -72,20 +70,14 @@ public class PetEndPoints {
     /**
      * Method updates an existing pet.
      *
-     * @param petId   pet's id. Id can be set random if it's value will be set to zero
-     * @param petName pet's name. Name can be set random if method Utilities.getRandom() will be called
      * @return
      */
-    public Long updatePet(int petId, String petName) {
-        JSONObject requestParams = new JSONObject();
-        requestParams.put("id", petId);
-        requestParams.put("name", petName);
-
-        ValidatableResponse response = given()
-                .body(requestParams.toJSONString())
+    public Long updatePet(Pet pet) {
+      ValidatableResponse response = given()
+                .body(pet)
                 .put(UPDATE_PET)
                 .then()
-                .body("name", (is(petName)))
+                .body("name", is(pet.getName()))
                 .statusCode(200);
         return response.extract().path("id", "name");
 
