@@ -34,7 +34,7 @@ public class PetEndPoints {
      * @param petId pet's id. Id can be set random if it's value will be set to zero
      */
 
-    public int getPet(long petId) {
+    public long getPet(long petId) {
         ValidatableResponse response = given()
                 .pathParam("petId", petId)
                 .get(GET_PET)
@@ -50,7 +50,7 @@ public class PetEndPoints {
      *
      * @return
      */
-    public int createPet(Pet pet) {
+    public long createPet(Pet pet) {
 
         ValidatableResponse response = given()
 
@@ -70,7 +70,7 @@ public class PetEndPoints {
      *
      * @return
      */
-    public int updatePet(Pet pet) {
+    public long updatePet(Pet pet) {
         ValidatableResponse response = given()
                 .body(pet)
                 .put(UPDATE_PET)
