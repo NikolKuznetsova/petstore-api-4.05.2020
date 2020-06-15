@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class Category {
-    private long id;
-    private String name;
+    @Builder.Default
+    private long id = 3;
+    @Builder.Default
+    private String name = "domestic pet";
 
 }

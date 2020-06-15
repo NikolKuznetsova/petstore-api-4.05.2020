@@ -17,12 +17,6 @@ public class UpdatePetTests {
     @Before
     public void before() {
         Pet pet = Pet.builder()
-                .id(0)
-                .name(Randomizer.getRandomPetName())
-                .status(Randomizer.getRandomStatus())
-                .photoUrls(urls)
-                .category(Category.builder().id(1).name("domestic pets").build())
-                .tags(new Tags[]{Tags.builder().id(1).name("domestic pets").build()})
                 .build();
         petId = petEndPoints.createPet(pet);
 
