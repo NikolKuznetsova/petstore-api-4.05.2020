@@ -4,7 +4,6 @@ import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import models.Pet;
-import org.json.simple.JSONObject;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -35,7 +34,7 @@ public class PetEndPoints {
      * @param petId pet's id. Id can be set random if it's value will be set to zero
      */
 
-    public Long getPet(long petId) {
+    public int getPet(long petId) {
         ValidatableResponse response = given()
                 .pathParam("petId", petId)
                 .get(GET_PET)
@@ -51,7 +50,7 @@ public class PetEndPoints {
      *
      * @return
      */
-    public Long createPet(Pet pet) {
+    public int createPet(Pet pet) {
 
         ValidatableResponse response = given()
 
@@ -64,7 +63,6 @@ public class PetEndPoints {
         return response.extract().path("id", "name");
 
 
-
     }
 
     /**
@@ -72,8 +70,8 @@ public class PetEndPoints {
      *
      * @return
      */
-    public Long updatePet(Pet pet) {
-      ValidatableResponse response = given()
+    public int updatePet(Pet pet) {
+        ValidatableResponse response = given()
                 .body(pet)
                 .put(UPDATE_PET)
                 .then()
