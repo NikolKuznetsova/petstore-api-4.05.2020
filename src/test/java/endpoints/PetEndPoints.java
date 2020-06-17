@@ -1,9 +1,10 @@
 package endpoints;
 
-import io.restassured.RestAssured;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import models.Pet;
+import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.core.annotations.Step;
 
 import static org.hamcrest.CoreMatchers.is;
 
@@ -21,7 +22,7 @@ public class PetEndPoints {
      * @return base URI, logs, headers
      */
     protected RequestSpecification given() {
-        return RestAssured
+        return SerenityRest
                 .given()
                 .log().all()
                 .baseUri(BASE_URI)
@@ -33,7 +34,7 @@ public class PetEndPoints {
      *
      * @param petId pet's id. Id can be set random if it's value will be set to zero
      */
-
+    @Step
     public long getPet(long petId) {
         ValidatableResponse response = given()
                 .pathParam("petId", petId)
@@ -50,6 +51,7 @@ public class PetEndPoints {
      *
      * @return
      */
+    @Step
     public long createPet(Pet pet) {
 
         ValidatableResponse response = given()
@@ -70,6 +72,7 @@ public class PetEndPoints {
      *
      * @return
      */
+    @Step
     public long updatePet(Pet pet) {
         ValidatableResponse response = given()
                 .body(pet)
@@ -86,6 +89,7 @@ public class PetEndPoints {
      *
      * @param petId pet's id. Id can be set random if it's value will be set to zero
      */
+    @Step
     public String deletePet(long petId) {
         ValidatableResponse response = given()
                 .pathParam("petId", petId)
