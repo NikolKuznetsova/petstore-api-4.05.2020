@@ -1,12 +1,22 @@
 package endpoints;
 
+import io.restassured.RestAssured;
+import io.restassured.filter.log.LogDetail;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import models.Pet;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
+import org.yecht.Data;
+
+import java.io.File;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 
 public class PetEndPoints {
 
@@ -14,8 +24,14 @@ public class PetEndPoints {
             CREATE_PET = "/pet",
             UPDATE_PET = "/pet",
             DELETE_PET = "/pet/{petId}",
-            GET_PET = "/pet/{petId}";
+            GET_PET = "/pet/{petId}",
+            GET_PET_BY_STATUS = "/pet/findByStatus/",
+            UPLOAD_AN_IMAGE = "/pet/{petId}/uploadImage";
 
+    static {
+        SerenityRest.filters(new RequestLoggingFilter(LogDetail.ALL));
+        SerenityRest.filters(new ResponseLoggingFilter(LogDetail.ALL));
+    }
     /**
      * Method makes a request to a base URI, collect logs and set headers
      *
@@ -24,7 +40,6 @@ public class PetEndPoints {
     protected RequestSpecification given() {
         return SerenityRest
                 .given()
-                .log().all()
                 .baseUri(BASE_URI)
                 .contentType("application/json");
     }
@@ -37,13 +52,21 @@ public class PetEndPoints {
     @Step
     public long getPet(long petId) {
         ValidatableResponse response = given()
-                .pathParam("petId", petId)
-                .get(GET_PET)
+                .get(GET_PET, petId)
                 .then()
-                .log().all()
                 .statusCode(200);
         return response.extract().path("id", "name");
 
+    }
+
+    @Step
+    public void getPetByStatus(String status){
+        given()
+                .param("status", status)
+                .get(GET_PET_BY_STATUS)
+                .then()
+                .body("[0].status", is(status))
+                .statusCode(200);
     }
 
     /**
@@ -59,7 +82,6 @@ public class PetEndPoints {
                 .body(pet)
                 .post(CREATE_PET)
                 .then()
-                .log().all()
                 .body("name", is(pet.getName()))
                 .statusCode(200);
         return response.extract().path("id", "name");
@@ -95,9 +117,47 @@ public class PetEndPoints {
                 .pathParam("petId", petId)
                 .delete(DELETE_PET)
                 .then()
-                .log().all()
                 .statusCode(200);
         return response.extract().path("message");
 
     }
+
+
+    @Step
+    public String uploadAnImage(long petId, String filePath){
+
+        ValidatableResponse response = given()
+                .pathParam("petId", petId)
+                .header("Content-Type", "multipart/json")
+                .multiPart("file", new File(filePath))
+                .accept(ContentType.ANY)
+                .post(UPLOAD_AN_IMAGE)
+                .then()
+                .assertThat()
+                .statusCode(200);
+        return response.extract().body().asString();
+    }
+
+    @Step
+    public void uploadAnImage2(long petId, String filePath){
+
+        String resp = given()
+                .pathParam("petId", petId)
+                .header("Content-Type", "multipart/json")
+                .multiPart("file", new File(filePath))
+                .when()
+                .post(UPLOAD_AN_IMAGE)
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .and()
+                .extract()
+                .body()
+                .asString();
+
+        assertEquals(resp, filePath);
+
+
+    }
 }
+
