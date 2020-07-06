@@ -3,12 +3,15 @@ package tests;
 import Utilities.Randomizer;
 import endpoints.PetEndPoints;
 import models.Pet;
+import models.Status;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static models.Status.SOLD;
 
 @RunWith(SerenityRunner.class)
 public class UpdatePetTests {
@@ -31,7 +34,7 @@ public class UpdatePetTests {
         Pet pet = Pet.builder()
                 .id(petId)
                 .name(Randomizer.getRandomPetName())
-                .status(Randomizer.getRandomStatus())
+                .status(SOLD)
                 .build();
         petEndPoints.updatePet(pet);
     }

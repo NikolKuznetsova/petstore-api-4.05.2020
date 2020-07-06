@@ -21,9 +21,9 @@ public class Randomizer {
      *
      * @return status value from an array
      */
-    public static String getRandomStatus() {
-        String[] petNames = {"available", "unavailable"};
-        String randomName = (petNames[new Random().nextInt(petNames.length)]);
-        return randomName;
-    }
+//    public static Status getRandomStatus() {
+//        String[] petNames = {String.valueOf(available), String.valueOf(SOLD)};
+//        String randomName = (petNames[new Random().nextInt(petNames.length)]);
+//        return randomName;
+//    }
 }

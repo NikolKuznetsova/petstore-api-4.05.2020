@@ -31,12 +31,12 @@ public class UploadImageTests {
 
     @Test
     public void uploadValidFile() {
-        petEndPoints.uploadAnImage(petId, "C:\\AutoTests\\petstore-api-4.05.2020\\src\\test\\resources\\cat.png");
+        petEndPoints.uploadAnImage(petId, "/cat.png");
     }
 
     @Test
     public void uploadInvalidFile() {
-        petEndPoints.uploadAnImage(petId, "C:\\Users\\qa.autotest\\Desktop\\file.pdf");
+        petEndPoints.uploadAnImage(petId, "/npp.7.6.5.Installer.exe");
     }
 
 }

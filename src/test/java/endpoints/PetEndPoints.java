@@ -9,12 +9,15 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import models.Pet;
+import models.Status;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import org.yecht.Data;
 
 import java.io.File;
+import java.sql.Statement;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 
@@ -60,12 +63,12 @@ public class PetEndPoints {
     }
 
     @Step
-    public void getPetByStatus(String status){
+    public void getPetByStatus(Status status){
         given()
                 .param("status", status)
                 .get(GET_PET_BY_STATUS)
                 .then()
-                .body("[0].status", is(status))
+                .body("[0].status", is(status.toString()))
                 .statusCode(200);
     }
 
@@ -125,12 +128,13 @@ public class PetEndPoints {
 
     @Step
     public String uploadAnImage(long petId, String filePath){
-
+        File image = new File(getClass().getResource(filePath).getFile());
         ValidatableResponse response = given()
                 .header("Content-Type", "multipart/form-data")
-                .multiPart(new File(filePath))
+                .multiPart(image)
                 .post(UPLOAD_AN_IMAGE, petId)
                 .then()
+                .body("message", containsString(image.getName()))
                 .statusCode(200);
         return response.extract().body().asString();
     }
