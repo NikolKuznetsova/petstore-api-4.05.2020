@@ -1,25 +1,21 @@
-package tests;
+package tests.PetTests;
 
-import Utilities.Randomizer;
 import endpoints.PetEndPoints;
-import models.Pet;
-import models.Status;
+import models.petModels.Pet;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static models.Status.SOLD;
-
 @RunWith(SerenityRunner.class)
-public class UpdatePetTests {
-    private long petId;
 
+public class DeletePetTests {
 
     @Steps
     private PetEndPoints petEndPoints;
+    private long petId;
+
 
     @Before
     public void before() {
@@ -30,17 +26,9 @@ public class UpdatePetTests {
     }
 
     @Test
-    public void updatePet() {
-        Pet pet = Pet.builder()
-                .id(petId)
-                .name(Randomizer.getRandomPetName())
-                .status(SOLD)
-                .build();
-        petEndPoints.updatePet(pet);
-    }
-
-    @After
-    public void after() {
+    public void deletePet() {
         petEndPoints.deletePet(petId);
     }
+
+
 }

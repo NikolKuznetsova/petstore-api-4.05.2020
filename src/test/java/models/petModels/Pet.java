@@ -1,8 +1,9 @@
-package models;
+package models.petModels;
 
 import Utilities.Randomizer;
 import lombok.Builder;
 import lombok.Getter;
+import models.Status;
 
 import static models.Status.*;
 

@@ -1,7 +1,8 @@
-package tests;
+package tests.PetTests;
 
+import Utilities.Randomizer;
 import endpoints.PetEndPoints;
-import models.Pet;
+import models.petModels.Pet;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.After;
@@ -9,11 +10,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static models.Status.SOLD;
+
 @RunWith(SerenityRunner.class)
-public class UploadImageTests {
+public class UpdatePetTests {
+    private long petId;
+
+
     @Steps
     private PetEndPoints petEndPoints;
-    private Long petId;
 
     @Before
     public void before() {
@@ -23,20 +28,18 @@ public class UploadImageTests {
 
     }
 
+    @Test
+    public void updatePet() {
+        Pet pet = Pet.builder()
+                .id(petId)
+                .name(Randomizer.getRandomPetName())
+                .status(SOLD)
+                .build();
+        petEndPoints.updatePet(pet);
+    }
 
     @After
     public void after() {
         petEndPoints.deletePet(petId);
     }
-
-    @Test
-    public void uploadValidFile() {
-        petEndPoints.uploadAnImage(petId, "/cat.png");
-    }
-
-    @Test
-    public void uploadInvalidFile() {
-        petEndPoints.uploadAnImage(petId, "/npp.7.6.5.Installer.exe");
-    }
-
 }

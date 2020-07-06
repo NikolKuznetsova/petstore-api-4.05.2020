@@ -26,4 +26,10 @@ public class Randomizer {
 //        String randomName = (petNames[new Random().nextInt(petNames.length)]);
 //        return randomName;
 //    }
+
+    public static int getRandomNumber(){
+        int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int randomId = (numbers[new Random().nextInt(numbers.length)]);
+                return randomId;
+    }
 }

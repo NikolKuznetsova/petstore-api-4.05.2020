@@ -1,40 +1,30 @@
-package tests;
+package tests.PetTests;
 
-import Utilities.Randomizer;
 import endpoints.PetEndPoints;
-import models.Category;
-import models.Pet;
-import models.Tags;
+import models.petModels.Pet;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(SerenityRunner.class)
-
-public class GetPetTests {
+public class CreatePetTests {
     private long petId;
-
     @Steps
     private PetEndPoints petEndPoints;
 
-    @Before
-    public void before() {
+    @Test
+    public void createPet() {
         Pet pet = Pet.builder()
                 .build();
-        petId = petEndPoints.createPet(pet);
-
-    }
-
-    @Test
-    public void getPetById() {
-        petEndPoints.getPet(petId);
+        petEndPoints.createPet(pet);
     }
 
     @After
     public void after() {
         petEndPoints.deletePet(petId);
     }
+
+
 }

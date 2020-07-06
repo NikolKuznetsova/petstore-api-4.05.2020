@@ -1,51 +1,25 @@
 package endpoints;
 
-import io.restassured.RestAssured;
-import io.restassured.filter.log.LogDetail;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import io.restassured.specification.RequestSpecification;
-import models.Pet;
+import models.petModels.Pet;
 import models.Status;
-import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
-import org.yecht.Data;
 
 import java.io.File;
-import java.sql.Statement;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 
-public class PetEndPoints {
+public class PetEndPoints extends  BaseClass{
 
-    public final static String BASE_URI = "https://petstore.swagger.io/v2",
-            CREATE_PET = "/pet",
+    public final static String CREATE_PET = "/pet",
             UPDATE_PET = "/pet",
             DELETE_PET = "/pet/{petId}",
             GET_PET = "/pet/{petId}",
             GET_PET_BY_STATUS = "/pet/findByStatus/",
             UPLOAD_AN_IMAGE = "/pet/{petId}/uploadImage";
 
-    static {
-        SerenityRest.filters(new RequestLoggingFilter(LogDetail.ALL));
-        SerenityRest.filters(new ResponseLoggingFilter(LogDetail.ALL));
-    }
-    /**
-     * Method makes a request to a base URI, collect logs and set headers
-     *
-     * @return base URI, logs, headers
-     */
-    protected RequestSpecification given() {
-        return SerenityRest
-                .given()
-                .baseUri(BASE_URI)
-                .contentType("application/json");
-    }
 
     /**
      * Method gets pet by it's ID

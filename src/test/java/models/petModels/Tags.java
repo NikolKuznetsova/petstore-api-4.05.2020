@@ -1,4 +1,4 @@
-package models;
+package models.petModels;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package tests;
+package tests.PetTests;
 
 import Utilities.Randomizer;
 import endpoints.PetEndPoints;
-import models.Pet;
+import models.petModels.Pet;
 import models.Status;
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.Steps;
