@@ -127,37 +127,13 @@ public class PetEndPoints {
     public String uploadAnImage(long petId, String filePath){
 
         ValidatableResponse response = given()
-                .pathParam("petId", petId)
-                .header("Content-Type", "multipart/json")
-                .multiPart("file", new File(filePath))
-                .accept(ContentType.ANY)
-                .post(UPLOAD_AN_IMAGE)
+                .header("Content-Type", "multipart/form-data")
+                .multiPart("file", new File(filePath), "multipart/form-data")
+                .post(UPLOAD_AN_IMAGE, petId)
                 .then()
-                .assertThat()
                 .statusCode(200);
         return response.extract().body().asString();
     }
 
-    @Step
-    public void uploadAnImage2(long petId, String filePath){
-
-        String resp = given()
-                .pathParam("petId", petId)
-                .header("Content-Type", "multipart/json")
-                .multiPart("file", new File(filePath))
-                .when()
-                .post(UPLOAD_AN_IMAGE)
-                .then()
-                .assertThat()
-                .statusCode(200)
-                .and()
-                .extract()
-                .body()
-                .asString();
-
-        assertEquals(resp, filePath);
-
-
-    }
 }
 

@@ -31,7 +31,7 @@ public class UploadImageTests {
 
     @Test
     public void uploadValidFile() {
-        petEndPoints.uploadAnImage2(petId, "C:\\Users\\qa.autotest\\Desktop\\cat.png");
+        petEndPoints.uploadAnImage(petId, "C:\\AutoTests\\petstore-api-4.05.2020\\src\\test\\resources\\cat.png");
     }
 
     @Test
