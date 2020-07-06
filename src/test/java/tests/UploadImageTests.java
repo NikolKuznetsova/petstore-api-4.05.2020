@@ -26,7 +26,7 @@ public class UploadImageTests {
 
     @After
     public void after() {
-       // petEndPoints.deletePet(petId);
+        petEndPoints.deletePet(petId);
     }
 
     @Test

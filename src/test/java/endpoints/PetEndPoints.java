@@ -128,7 +128,7 @@ public class PetEndPoints {
 
         ValidatableResponse response = given()
                 .header("Content-Type", "multipart/form-data")
-                .multiPart("file", new File(filePath), "multipart/form-data")
+                .multiPart(new File(filePath))
                 .post(UPLOAD_AN_IMAGE, petId)
                 .then()
                 .statusCode(200);
