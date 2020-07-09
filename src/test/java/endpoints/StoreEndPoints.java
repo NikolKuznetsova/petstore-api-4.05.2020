@@ -2,6 +2,7 @@ package endpoints;
 
 import io.restassured.response.ValidatableResponse;
 import models.storeModels.Order;
+import models.storeModels.Status;
 import net.thucydides.core.annotations.Step;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -27,7 +28,7 @@ public class StoreEndPoints extends BaseClass{
                 .body(order)
                 .post(PLACE_ORDER)
                 .then()
-                .body("status", is(order.getStatus()))
+                .body("status", is(order.getStatus().toString()))
                 .statusCode(200);
         return response.extract().path("id");
 
@@ -35,11 +36,11 @@ public class StoreEndPoints extends BaseClass{
     }
 
     @Step
-    public void findOrderById(long orderId){
+    public void findOrderById(int orderId){
         given()
                 .get(FIND_ORDER_BY_ID, orderId)
                 .then()
-                .body("status", is("placed"))
+                .body("id", is(orderId))
                 .statusCode(200);
 
     }
@@ -63,7 +64,6 @@ public class StoreEndPoints extends BaseClass{
         given()
                 .get(RETURN_PET_INVENTORY)
                 .then()
-                .body(containsString("sold"), containsString("pending"))
                 .statusCode(200);
     }
 }

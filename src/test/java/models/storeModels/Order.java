@@ -1,23 +1,26 @@
 package models.storeModels;
 
-import Utilities.Randomizer;
 import lombok.Builder;
 import lombok.Getter;
-import org.yecht.Data;
+
+import static models.storeModels.Status.*;
+import static utilities.Randomizer.*;
 
 @Getter
 @Builder
 public class Order {
     @Builder.Default
-    private int id = Randomizer.getRandomNumber();
+    private int id = getRandomNumber();
     @Builder.Default
-    private long petId = 0;
+    private int petId = getRandomNumber();
     @Builder.Default
-    private int quantity = 0;
+    private int quantity = getRandomNumber();
+//    private static  Date date = Calendar.getInstance().getTime();
+//    private static  DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
     @Builder.Default
-    private String shipDate = "2020-07-06T12:43:29.648Z";
+    private String shipDate = "2020-07-06T12:43:29.648Z"; //dateFormat.format(date);
     @Builder.Default
-    private String status = "placed";
+    private Status status = PLACED;
     @Builder.Default
-    private Boolean complete = true;
+    private Boolean complete = getRandomCompleteness();
 }

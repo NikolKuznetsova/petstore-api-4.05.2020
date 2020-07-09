@@ -2,7 +2,7 @@ package endpoints;
 
 import io.restassured.response.ValidatableResponse;
 import models.petModels.Pet;
-import models.Status;
+import models.petModels.Status;
 import net.thucydides.core.annotations.Step;
 
 import java.io.File;

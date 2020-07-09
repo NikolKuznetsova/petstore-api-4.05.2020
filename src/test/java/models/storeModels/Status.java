@@ -1,5 +1,7 @@
 package models.storeModels;
 
 public enum Status {
-    SOLD,
+    PLACED,
+    APPROVED,
+    DELIVERED
 }

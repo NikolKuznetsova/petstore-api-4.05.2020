@@ -1,11 +1,10 @@
 package models.petModels;
 
-import Utilities.Randomizer;
+import utilities.Randomizer;
 import lombok.Builder;
 import lombok.Getter;
-import models.Status;
 
-import static models.Status.*;
+import static models.petModels.Status.*;
 
 @Getter
 @Builder

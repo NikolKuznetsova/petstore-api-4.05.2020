@@ -1,6 +1,6 @@
 package tests.PetTests;
 
-import Utilities.Randomizer;
+import utilities.Randomizer;
 import endpoints.PetEndPoints;
 import models.petModels.Pet;
 import net.serenitybdd.junit.runners.SerenityRunner;
@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static models.Status.SOLD;
+import static models.petModels.Status.SOLD;
 
 @RunWith(SerenityRunner.class)
 public class UpdatePetTests {

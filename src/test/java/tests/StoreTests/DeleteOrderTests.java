@@ -1,6 +1,7 @@
 package tests.StoreTests;
 
 import endpoints.StoreEndPoints;
+import models.storeModels.Status;
 import models.storeModels.Order;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -14,6 +15,7 @@ public class DeleteOrderTests {
     @Steps
     private StoreEndPoints storeEndPoints;
     private int orderId;
+
 
     @Before
     public void before() {
