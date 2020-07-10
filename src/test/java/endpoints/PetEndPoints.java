@@ -36,6 +36,10 @@ public class PetEndPoints extends  BaseClass{
 
     }
 
+    /**
+     * Method gets pet by status
+     * @param status pet's status
+     */
     @Step
     public void getPetByStatus(Status status){
         given()
@@ -49,7 +53,7 @@ public class PetEndPoints extends  BaseClass{
     /**
      * Method creates new pet.
      *
-     * @return
+     * @return id and name of created pet
      */
     @Step
     public long createPet(Pet pet) {
@@ -69,7 +73,7 @@ public class PetEndPoints extends  BaseClass{
     /**
      * Method updates an existing pet.
      *
-     * @return
+     * @return id and name of updated pet
      */
     @Step
     public long updatePet(Pet pet) {
@@ -100,17 +104,21 @@ public class PetEndPoints extends  BaseClass{
     }
 
 
+    /** Method upload a file
+     *
+     * @param petId pet's id
+     * @param filePath path to the file
+     */
     @Step
-    public String uploadAnImage(long petId, String filePath){
+    public void uploadAnImage(long petId, String filePath){
         File image = new File(getClass().getResource(filePath).getFile());
-        ValidatableResponse response = given()
+       given()
                 .header("Content-Type", "multipart/form-data")
                 .multiPart(image)
                 .post(UPLOAD_AN_IMAGE, petId)
                 .then()
                 .body("message", containsString(image.getName()))
                 .statusCode(200);
-        return response.extract().body().asString();
     }
 
 }

@@ -15,10 +15,10 @@ public class StoreEndPoints extends BaseClass{
     DELETE_ORDER_BY_ID = "/store/order/{orderId}",
     RETURN_PET_INVENTORY = "/store/inventory";
 
-    /**
-     * Method creates new pet.
+    /**Method places new order
      *
-     * @return
+     * @param order Model of order that includes all necessary fields
+     * @return returns id of created order
      */
     @Step
     public int placeOrder(Order order) {
@@ -35,6 +35,10 @@ public class StoreEndPoints extends BaseClass{
 
     }
 
+    /**Method get order by id
+     *
+     * @param orderId id of order
+     */
     @Step
     public void findOrderById(int orderId){
         given()
@@ -46,19 +50,22 @@ public class StoreEndPoints extends BaseClass{
     }
 
     /**
-     * Method deletes an existing pet.
+     * Method deletes an existing order.
      *
-     * @param petId pet's id. Id can be set random if it's value will be set to zero
+     * @param orderId id of order
      */
     @Step
-    public void deleteOrder(int petId) {
+    public void deleteOrder(int orderId) {
         given()
-                .delete(DELETE_ORDER_BY_ID, petId)
+                .delete(DELETE_ORDER_BY_ID, orderId)
                 .then()
                 .statusCode(200);
 
     }
 
+    /**
+     * Method get all returned inventories by status
+     */
     @Step
     public void returnPetsInventoriesByStatus(){
         given()
