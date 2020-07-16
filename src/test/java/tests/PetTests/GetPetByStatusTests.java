@@ -32,9 +32,9 @@ public class GetPetByStatusTests {
     @TestData
     public static Collection<Object[]> testData(){
         return Arrays.asList(new Object[][]{
-                {available},
-                {SOLD},
-                {PENDING},
+                {AVAILABLE},
+//                {SOLD},
+//                {PENDING},
         });
     }
 
@@ -43,7 +43,7 @@ public class GetPetByStatusTests {
     public void before() {
         Pet pet = Pet.builder()
                 .id(0)
-                .name(Randomizer.getRandomPetName())
+                .name(Randomizer.getNameFromList())
                 .status(status)
                 .build();
         petId = petEndPoints.createPet(pet);

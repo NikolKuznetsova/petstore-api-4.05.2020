@@ -32,7 +32,7 @@ public class UpdatePetTests {
     public void updatePet() {
         Pet pet = Pet.builder()
                 .id(petId)
-                .name(Randomizer.getRandomPetName())
+                .name(Randomizer.getNameFromList())
                 .status(SOLD)
                 .build();
         petEndPoints.updatePet(pet);

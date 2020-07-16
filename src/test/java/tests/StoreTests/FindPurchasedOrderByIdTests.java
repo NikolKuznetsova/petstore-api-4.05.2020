@@ -2,7 +2,6 @@ package tests.StoreTests;
 
 import endpoints.StoreEndPoints;
 import models.storeModels.Order;
-import models.storeModels.Status;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.After;

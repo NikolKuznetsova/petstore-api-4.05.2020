@@ -7,11 +7,11 @@ import net.thucydides.core.annotations.Step;
 
 import java.io.File;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 import static org.junit.Assert.assertEquals;
 
-public class PetEndPoints extends  BaseClass{
+public class PetEndPoints extends BaseEndpoint {
 
     public final static String CREATE_PET = "/pet",
             UPDATE_PET = "/pet",
@@ -46,7 +46,9 @@ public class PetEndPoints extends  BaseClass{
                 .param("status", status)
                 .get(GET_PET_BY_STATUS)
                 .then()
-                .body("[0].status", is(status.toString()))
+                //.body("[0].status", is(status.toString()))
+               // .body("status", hasItem(allOf(hasProperty("status", is(status.toString())))))
+                .body("status", everyItem(is(status.toString())))
                 .statusCode(200);
     }
 

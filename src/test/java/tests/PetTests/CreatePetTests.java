@@ -18,7 +18,7 @@ public class CreatePetTests {
     public void createPet() {
         Pet pet = Pet.builder()
                 .build();
-        petEndPoints.createPet(pet);
+        petId = petEndPoints.createPet(pet);
     }
 
     @After

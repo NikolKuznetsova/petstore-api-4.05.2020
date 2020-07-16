@@ -1,21 +1,26 @@
 package endpoints;
 
 import io.restassured.response.ValidatableResponse;
+import models.petModels.Status;
 import models.storeModels.Order;
-import models.storeModels.Status;
 import net.thucydides.core.annotations.Step;
+import org.hamcrest.Matchers;
 
-import static org.hamcrest.CoreMatchers.containsString;
+import static models.petModels.Status.MYTEST;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.hasKey;
+import static org.junit.Assert.assertThat;
 
-public class StoreEndPoints extends BaseClass{
+public class StoreEndPoints extends BaseEndpoint {
 
     public final static String PLACE_ORDER = "/store/order",
-    FIND_ORDER_BY_ID = "/store/order/{orderId}",
-    DELETE_ORDER_BY_ID = "/store/order/{orderId}",
-    RETURN_PET_INVENTORY = "/store/inventory";
+            FIND_ORDER_BY_ID = "/store/order/{orderId}",
+            DELETE_ORDER_BY_ID = "/store/order/{orderId}",
+            RETURN_PET_INVENTORY = "/store/inventory";
 
-    /**Method places new order
+    /**
+     * Method places new order
      *
      * @param order Model of order that includes all necessary fields
      * @return returns id of created order
@@ -35,12 +40,13 @@ public class StoreEndPoints extends BaseClass{
 
     }
 
-    /**Method get order by id
+    /**
+     * Method gets order by id
      *
      * @param orderId id of order
      */
     @Step
-    public void findOrderById(int orderId){
+    public void findOrderById(int orderId) {
         given()
                 .get(FIND_ORDER_BY_ID, orderId)
                 .then()
@@ -64,13 +70,16 @@ public class StoreEndPoints extends BaseClass{
     }
 
     /**
-     * Method get all returned inventories by status
+     * Method gets all returned inventories by status
+     *
+     * @return
      */
     @Step
-    public void returnPetsInventoriesByStatus(){
-        given()
+    public ValidatableResponse returnPetsInventoriesByStatus() {
+        return given()
                 .get(RETURN_PET_INVENTORY)
                 .then()
+                .body("$", Matchers.is(hasKey("MYTEST")))
                 .statusCode(200);
     }
 }

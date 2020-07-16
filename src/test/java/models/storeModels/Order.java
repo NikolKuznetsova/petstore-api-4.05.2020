@@ -6,23 +6,23 @@ import lombok.Getter;
 import java.time.Instant;
 
 import static models.storeModels.Status.PLACED;
-import static utilities.Randomizer.getRandomCompleteness;
-import static utilities.Randomizer.getRandomNumber;
+import static utilities.Randomizer.getCompletenessFromList;
+import static utilities.Randomizer.getOneOfTenNumbersFromList;
 
 @Getter
 @Builder
 public class Order {
     @Builder.Default
-    private int id = getRandomNumber();
+    private int id = getOneOfTenNumbersFromList();
     @Builder.Default
-    private int petId = getRandomNumber();
+    private int petId = getOneOfTenNumbersFromList();
     @Builder.Default
-    private int quantity = getRandomNumber();
+    private int quantity = getOneOfTenNumbersFromList();
     @Builder.Default
     private String shipDate = Instant.now().toString();
     @Builder.Default
     private Status status = PLACED;
     @Builder.Default
-    private Boolean complete = getRandomCompleteness();
+    private Boolean complete = getCompletenessFromList();
 
 }

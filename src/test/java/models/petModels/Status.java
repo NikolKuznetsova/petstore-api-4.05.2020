@@ -1,7 +1,8 @@
 package models.petModels;
 
 public enum Status {
-    available,
+    AVAILABLE,
     PENDING,
-    SOLD
+    SOLD,
+    MYTEST
 }
