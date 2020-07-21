@@ -28,7 +28,7 @@ public class Randomizer {
                 return randomId;
     }
 
-    public static boolean add(){
+    public static boolean getCompletenessFromList(){
         boolean[] meanings = {true, false};
         boolean randomMeaning = (meanings[new Random().nextInt(meanings.length)]);
         return randomMeaning;

@@ -6,8 +6,10 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.rest.SerenityRest;
 
+import static config.ConfigProperties.BASE_URL;
+
 public class BaseEndpoint {
-    public final static String BASE_URI = "https://petstore.swagger.io/v2";
+    //public final static String BASE_URI = "https://petstore.swagger.io/v2";
 
     static {
         SerenityRest.filters(new RequestLoggingFilter(LogDetail.ALL));
@@ -21,7 +23,7 @@ public class BaseEndpoint {
     protected RequestSpecification given() {
         return SerenityRest
                 .given()
-                .baseUri(BASE_URI)
+                .baseUri(BASE_URL)
                 .contentType("application/json");
     }
 }
