@@ -76,10 +76,14 @@ public class StoreEndPoints extends BaseEndpoint {
      */
     @Step
     public ValidatableResponse returnPetsInventoriesByStatus() {
-        return given()
+        ValidatableResponse response = given()
                 .get(RETURN_PET_INVENTORY)
                 .then()
                 .body("$", Matchers.is(hasKey("MYTEST")))
                 .statusCode(200);
+
+        //System.out.println(String.valueOf(response.extract().path("find { it ->it.status = 'SOLD'}.id")));
+
+        return response;
     }
 }
